@@ -1,0 +1,8 @@
+bin/getfsent.pl
+CHANGES
+lib/Filesys/getfsent.pm
+Makefile.PL
+MANIFEST			This list of files
+META.yml
+README
+t/Filesys-getfsent.t
