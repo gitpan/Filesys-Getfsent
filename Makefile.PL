@@ -1,6 +1,5 @@
 use ExtUtils::MakeMaker;
 WriteMakefile(
-    DISTNAME     => 'Filesys-Getfsent',
     NAME         => 'Filesys::Getfsent',
     VERSION_FROM => 'lib/Filesys/Getfsent.pm',
     PREREQ_PM    => { Exporter => 0 },
