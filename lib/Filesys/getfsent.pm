@@ -1,6 +1,6 @@
 package Filesys::getfsent;
 
-$VERSION = '0.05';
+$VERSION = '0.06';
 @EXPORT_OK = qw(getfsent);
 
 use strict 'vars';
@@ -35,10 +35,12 @@ sub getfsent {
 
 sub _parse_entries {
     my @entries;
+    
     my $fh = _open_fh();
     for (my $i = 0; local $_ = <$fh>; $i++) {
         chomp;
 	my @entry = split;
+	
 	# In case element 4, fs_type, doesn't
 	# contain fs_mntops, insert blank fs_mntops
 	# at index 3 and move fs_type to index 4. 
@@ -51,6 +53,7 @@ sub _parse_entries {
 	else { 
 	    splice(@entry, 3, 1, (reverse split ',', $entry[3], 2)); 
 	}
+	
 	@{$entries[$i]} = @entry;
     }
     _close_fh($fh);
