@@ -1,6 +1,6 @@
 package Filesys::getfsent;
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 @EXPORT = qw(getfsent);
 
 use strict 'vars';
