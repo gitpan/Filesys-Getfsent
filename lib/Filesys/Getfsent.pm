@@ -1,6 +1,6 @@
 package Filesys::Getfsent;
 
-$VERSION = '0.08';
+$VERSION = '0.09';
 @EXPORT_OK = qw(getfsent);
 
 use strict 'vars';
@@ -22,7 +22,7 @@ sub getfsent {
         }
 	 
         if (@{$ENTRIES}) {
-	    return @{(shift @{$ENTRIES})[0]};
+	    return @{shift @{$ENTRIES}};
 	}
 	else { 
 	    ${$ENTRIES} = 0;
@@ -37,6 +37,7 @@ sub _parse_entries {
     my @entries;
     
     my $fh = _open_fh();
+    
     for (my $i = 0; local $_ = <$fh>; $i++) {
         chomp;
 	my @entry = split;
@@ -51,6 +52,7 @@ sub _parse_entries {
 	
 	@{$entries[$i]} = @entry;
     }
+    
     _close_fh( $fh );
     
     return \@entries;
