@@ -1,6 +1,6 @@
 package Filesys::getfsent;
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 @EXPORT = qw(getfsent);
 
 use strict 'vars';
@@ -64,7 +64,7 @@ sub _count_entries {
 }    
 
 sub _open_fh {
-    my $fh = new FileHandle "$FSTAB", 'r'
+    my $fh = new FileHandle $FSTAB, 'r'
       or croak "Couldn't open $FSTAB: $!";
     return $fh;
 }
