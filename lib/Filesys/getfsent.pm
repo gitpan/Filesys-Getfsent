@@ -1,7 +1,7 @@
 package Filesys::getfsent;
 
-$VERSION = '0.04';
-@EXPORT = qw(getfsent);
+$VERSION = '0.05';
+@EXPORT_OK = qw(getfsent);
 
 use strict 'vars';
 use vars qw($ENTRIES $FSTAB);
@@ -21,10 +21,12 @@ sub getfsent {
         if (@{$ENTRIES}) {
             my @entry = @{${$ENTRIES}[0]};
 	    shift @{$ENTRIES};
+	    
             return @entry;
 	}
 	else { 
 	    ${$ENTRIES} = 0;
+	    
 	    return (); 
 	}
     }
@@ -52,25 +54,29 @@ sub _parse_entries {
 	@{$entries[$i]} = @entry;
     }
     _close_fh($fh);
+    
     return \@entries;
 }
 
 sub _count_entries {
     my $counted_entries;
+    
     my $fh = _open_fh();   
     $counted_entries++ while <$fh>;
     _close_fh($fh); 
+    
     return $counted_entries;
 }    
 
 sub _open_fh {
     my $fh = new FileHandle $FSTAB, 'r'
       or croak "Couldn't open $FSTAB: $!";
+      
     return $fh;
 }
 
 sub _close_fh { 
-    my $fh = shift;
+    my($fh) = @_;
     $fh->close;
 }
 
@@ -83,7 +89,7 @@ Filesys::getfsent - Get file system entries
 
 =head1 SYNOPSIS
 
- use Filesys::getfsent;
+ use Filesys::getfsent qw(getfsent);
 
  while (@entry = getfsent()) {
     print "@entry\n";
@@ -107,7 +113,7 @@ In scalar context, total of entries is returned.
 
 =head1 EXPORT
 
-C<getfsent()> by default.
+C<getfsent()> is exportable.
 
 =head1 SEE ALSO
 
