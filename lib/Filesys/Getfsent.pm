@@ -1,6 +1,6 @@
-package Filesys::getfsent;
+package Filesys::Getfsent;
 
-$VERSION = '0.06';
+$VERSION = '0.07';
 @EXPORT_OK = qw(getfsent);
 
 use strict 'vars';
@@ -9,20 +9,20 @@ use base qw(Exporter);
 use Carp 'croak';
 use FileHandle;
 
-$ENTRIES = __PACKAGE__.'::fsents';
+
+$ENTRIES = __PACKAGE__.'::_fsents';
 $FSTAB = '/etc/fstab';
+
 
 sub getfsent {   
     if (wantarray) {
         unless (${$ENTRIES}) {
             @{$ENTRIES} = @{_parse_entries()};
             ${$ENTRIES} = 1;
-        } 
+        }
+	 
         if (@{$ENTRIES}) {
-            my @entry = @{${$ENTRIES}[0]};
-	    shift @{$ENTRIES};
-	    
-            return @entry;
+	    return @{(shift @{$ENTRIES})[0]};
 	}
 	else { 
 	    ${$ENTRIES} = 0;
@@ -41,22 +41,17 @@ sub _parse_entries {
         chomp;
 	my @entry = split;
 	
-	# In case element 4, fs_type, doesn't
-	# contain fs_mntops, insert blank fs_mntops
-	# at index 3 and move fs_type to index 4. 
-	if ($entry[3] !~ /,/) {
-	   splice(@entry, 3, 1, '', $entry[3]);
-	}
-	# In case element 4 contains fs_type and 
-	# fs_mntops, switch fs_mntops to index 3 and
-	# fs_type to index 4.
-	else { 
-	    splice(@entry, 3, 1, (reverse split ',', $entry[3], 2)); 
-	}
+	if ($entry[3] !~ /,/) {                       # In case element 4, fs_type, doesn't
+	    splice( @entry, 3, 1, '', $entry[3] );    # contain fs_mntops, insert blank fs_mntops     
+	}                                             # at index 3 and move fs_type to index 4.
+	else {          
+	    splice( @entry, 3, 1,                     # In case element 4 contains fs_type and
+	      (reverse split ',', $entry[3], 2) );    # fs_mntops, switch fs_mntops to index 3 and 
+	}                                             # fs_type to index 4.	
 	
 	@{$entries[$i]} = @entry;
     }
-    _close_fh($fh);
+    _close_fh( $fh );
     
     return \@entries;
 }
@@ -66,7 +61,7 @@ sub _count_entries {
     
     my $fh = _open_fh();   
     $counted_entries++ while <$fh>;
-    _close_fh($fh); 
+    _close_fh( $fh ); 
     
     return $counted_entries;
 }    
@@ -79,7 +74,7 @@ sub _open_fh {
 }
 
 sub _close_fh { 
-    my($fh) = @_;
+    my ($fh) = @_;
     $fh->close;
 }
 
@@ -88,11 +83,11 @@ __END__
 
 =head1 NAME
 
-Filesys::getfsent - Get file system entries
+Filesys::Getfsent - Get file system entries
 
 =head1 SYNOPSIS
 
- use Filesys::getfsent qw(getfsent);
+ use Filesys::Getfsent qw(getfsent);
 
  while (@entry = getfsent()) {
     print "@entry\n";

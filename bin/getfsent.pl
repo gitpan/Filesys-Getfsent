@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Filesys::getfsent qw(getfsent);
+use Filesys::Getfsent qw(getfsent);
 
 while (my @entry = getfsent()) {
     print "@entry\n";

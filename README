@@ -1,4 +1,4 @@
-Filesys::getfsent
+Filesys::Getfsent
 =================
 
 Get file system entries

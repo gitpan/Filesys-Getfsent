@@ -1,8 +1,8 @@
 bin/getfsent.pl
-CHANGES
-lib/Filesys/getfsent.pm
+Changes
+lib/Filesys/Getfsent.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
-t/Filesys-getfsent.t
+t/Filesys-Getfsent.t

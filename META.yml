@@ -1,7 +1,9 @@
 --- #YAML:1.0
-module_name: Filesys-getfsent
-dist_version_from: lib/Filesys/getfsent.pm
+module_name: Filesys-Getfsent
+dist_version_from: lib/Filesys/Getfsent.pm
 installdirs: site
+requires:
+    Exporter: 0 
 distribution_type: module
 license: perl
 dist_abstract: Get file system entries
